@@ -14,38 +14,45 @@ if not os.path.exists(csv_path):
 # Load data
 df = pd.read_csv(csv_path)
 
-# Filter for positive improvements only
-df_improved = df[df['accuracy_delta'] > 0].sort_values(by='accuracy_delta', ascending=False)
+# Filter for top 10 improvements and top 10 regressions
+df_improved = df.sort_values(by='accuracy_delta', ascending=False).head(10)
+df_regressed = df.sort_values(by='accuracy_delta', ascending=True).head(10)
 
-# Take top 15
-top_n = 15
-df_top = df_improved.head(top_n)
+# Combine them
+df_plot = pd.concat([df_improved, df_regressed]).sort_values(by='accuracy_delta', ascending=False)
 
 # Plotting
-plt.figure(figsize=(12, 8))
+plt.figure(figsize=(14, 10))
 sns.set_theme(style="whitegrid")
+
+# Create colors based on value
+colors = ['#2ecc71' if x >= 0 else '#e74c3c' for x in df_plot['accuracy_delta']]
 
 # Create a horizontal bar chart
 barplot = sns.barplot(
-    data=df_top,
+    data=df_plot,
     y='topic',
     x='accuracy_delta',
-    palette="viridis",
+    palette=colors,
     hue='topic',
     legend=False
 )
 
-plt.title(f'Top {top_n} Areas Where VaidhLLaMA Improves Over Base Model', fontsize=18, pad=20)
-plt.xlabel('Accuracy Improvement (%)', fontsize=14)
+plt.title('VaidhLLaMA Impact Analysis: Where it Wins & Loses', fontsize=18, pad=20)
+plt.xlabel('Accuracy Difference (%)', fontsize=14)
 plt.ylabel('Ayurvedic Topic', fontsize=14)
+plt.axvline(x=0, color='black', linestyle='-', linewidth=0.8)
 
 # Add values to the bars
-for i, v in enumerate(df_top['accuracy_delta']):
-    plt.text(v + 0.5, i, f'+{v:.1f}%', va='center', fontsize=12, fontweight='bold', color='#2c3e50')
+for i, v in enumerate(df_plot['accuracy_delta']):
+    offset = 1 if v >= 0 else -1
+    ha = 'left' if v >= 0 else 'right'
+    color = '#27ae60' if v >= 0 else '#c0392b'
+    plt.text(v + offset, i, f'{v:+.1f}%', va='center', ha=ha, fontsize=11, fontweight='bold', color=color)
 
 plt.tight_layout()
 
 # Save
 plot_path = os.path.join(output_dir, "vaidhllama_blog_improvement.png")
 plt.savefig(plot_path, dpi=300, bbox_inches='tight')
-print(f"Blog-ready plot saved to {plot_path}")
+print(f"Blog-ready plot with Wins/Losses saved to {plot_path}")
