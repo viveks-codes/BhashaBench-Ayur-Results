@@ -22,23 +22,23 @@ This repository contains the raw evaluation logs and summary results for **Vaidh
 | AyurParam | 2.9B | 28.03% | Previous Attempt |
 | Llama-3.2 | 1B | 27.58% | Tiny Model |
 
-![Benchmark Summary](benchmark_summary_plot.png)
+![Benchmark Summary](analysis/benchmark_summary_plot.png)
 
 ## Topic-wise Performance
 
 We evaluated models across diverse Ayurvedic topics. **VaidhLlama** shows consistent improvements over its base model (Llama-3.2-3B) in domain-specific tasks.
 
-![Topic Heatmap](topic_wise_heatmap.png)
+![Topic Heatmap](analysis/topic_wise_heatmap.png)
 
-Detailed topic-wise accuracy can be found in `topic_wise_accuracy.csv`.
+Detailed topic-wise accuracy can be found in `analysis/topic_wise_accuracy.csv`.
 
 ## File Contents
 
-*   `benchmark_summary.csv`: Aggregated performance metrics for all models.
-*   `topic_wise_accuracy.csv`: Detailed accuracy breakdown by topic.
-*   `benchmark_summary_plot.png`: Bar chart of overall model accuracy.
-*   `topic_wise_heatmap.png`: Heatmap of performance across top topics.
-*   `results_*.csv`: Detailed row-by-row prediction logs.
+*   `analysis/benchmark_summary.csv`: Aggregated performance metrics for all models.
+*   `analysis/topic_wise_accuracy.csv`: Detailed accuracy breakdown by topic.
+*   `analysis/benchmark_summary_plot.png`: Bar chart of overall model accuracy.
+*   `analysis/topic_wise_heatmap.png`: Heatmap of performance across top topics.
+*   `raw_results/results_*.csv`: Detailed row-by-row prediction logs.
 
 ## Methodology
 All models were evaluated in a **Zero-Shot** setting using valid JSON schema enforcement to ensure parsing reliability.
