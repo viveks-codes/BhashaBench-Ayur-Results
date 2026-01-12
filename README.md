@@ -8,18 +8,37 @@ This repository contains the raw evaluation logs and summary results for **Vaidh
 
 | Model | Parameters | Accuracy (%) | Note |
 | :--- | :--- | :--- | :--- |
-| **VaidhLLaMA** | **3B** | **41.91%** | **Fine-tuned (Ours)** |
-| Llama-3.2-Instruct | 3B | 40.74% | Base Model |
-| Gemma-2-Instruct | 2B | 41.00% | Comparable Size |
+| **Gemma-2** | **27B** | **52.17%** | **Large Model SOTA** |
+| Llama-3.1 | 8B | 48.63% | Strong Mid-sized |
 | Qwen2.5 | 3B | 46.76% | Strong Baseline |
-| Gemma-2-Instruct | 27B | 52.17% | Large Model SOTA |
+| Pangea | 7B | 42.72% | Multilingual |
+| **VaidhLLaMA** | **3B** | **41.91%** | **Fine-tuned (Ours)** |
+| Gemma-2-Instruct | 2B | 41.00% | Efficient Small Model |
+| Llama-3.2-Instruct | 3B | 40.74% | Base Model for VaidhLlama |
+| Nemotron-4-Mini | 4B | 38.67% | NVIDIA Medical |
+| Aya-23 | 8B | 36.47% | Multilingual |
+| Granite-3.1 | 2B | 34.15% | IBM Efficient |
+| Indic-Gemma | 7B | 32.82% | Indic Focused |
 | AyurParam | 2.9B | 28.03% | Previous Attempt |
+| Llama-3.2 | 1B | 27.58% | Tiny Model |
+
+![Benchmark Summary](benchmark_summary_plot.png)
+
+## Topic-wise Performance
+
+We evaluated models across diverse Ayurvedic topics. **VaidhLlama** shows consistent improvements over its base model (Llama-3.2-3B) in domain-specific tasks.
+
+![Topic Heatmap](topic_wise_heatmap.png)
+
+Detailed topic-wise accuracy can be found in `topic_wise_accuracy.csv`.
 
 ## File Contents
 
 *   `benchmark_summary.csv`: Aggregated performance metrics for all models.
-*   `results_*.csv`: Detailed row-by-row prediction logs for each model run.
-    *   Columns: `question`, `correct_answer`, `prediction`, `is_correct`, `subject_domain`, `topic`
+*   `topic_wise_accuracy.csv`: Detailed accuracy breakdown by topic.
+*   `benchmark_summary_plot.png`: Bar chart of overall model accuracy.
+*   `topic_wise_heatmap.png`: Heatmap of performance across top topics.
+*   `results_*.csv`: Detailed row-by-row prediction logs.
 
 ## Methodology
 All models were evaluated in a **Zero-Shot** setting using valid JSON schema enforcement to ensure parsing reliability.
